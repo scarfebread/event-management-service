@@ -3,7 +3,7 @@
 The event-management-service provides an interface to manage events. The service only provides an interface to get artist events at the moment but provides the base to expand into other event management interfaces. 
 
 # Interface
-## /
+See openapi documentation at TODO
 
 ## Running
 ### Docker 
@@ -20,3 +20,10 @@ docker-compose up
 #### Troubleshooting 
 ##### Port clashes
 The app starts on 8085. You can change this port within the docker-compose.yml file.
+
+## Design decisions 
+### Package by feature
+
+### Controller exception handling
+
+###
