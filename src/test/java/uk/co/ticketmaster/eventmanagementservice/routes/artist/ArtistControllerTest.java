@@ -1,9 +1,11 @@
-package uk.co.ticketmaster.eventmanagementservice.artist;
+package uk.co.ticketmaster.eventmanagementservice.routes.artist;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatusCode;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+import uk.co.ticketmaster.eventmanagementservice.client.response.ArtistResponse;
+import uk.co.ticketmaster.eventmanagementservice.routes.artist.model.Artist;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -16,7 +18,9 @@ class ArtistControllerTest {
     void givenValidArtistId_whenGetArtist_thenReturnArtistWithEvents() {
         var artistId = ARTIST_ID;
         var service = mock(ArtistService.class);
-        var artist = new Artist();
+        var artist = Artist.fromResponse(
+                new ArtistResponse("", "", "", "", 1)
+        );
 
         when(service.getArtist(artistId)).thenReturn(Mono.just(artist));
 

@@ -26,4 +26,5 @@ The app starts on 8085. You can change this port within the docker-compose.yml f
 
 ### Controller exception handling
 
-###
+### Concurrent calls to S3
+Although we could make these calls concurrently since we're pulling all the data back, this wouldn't be the case in the real world, so I've decided to call 1 at a time to simulate calls to REST services that rely on IDs from previous calls.

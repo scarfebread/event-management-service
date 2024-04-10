@@ -1,4 +1,4 @@
-package uk.co.ticketmaster.eventmanagementservice.artist;
+package uk.co.ticketmaster.eventmanagementservice.routes.artist;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
+import uk.co.ticketmaster.eventmanagementservice.routes.artist.model.Artist;
 
 @RestController
 @RequestMapping(path = "/artist")
