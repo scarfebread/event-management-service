@@ -18,8 +18,9 @@ public class VenueClient {
                 .get()
                 .uri("https://iccp-interview-data.s3-eu-west-1.amazonaws.com/78656681/venues.json")
                 .retrieve()
-                .bodyToFlux(VenueResponse.class)
-                .filter(venue -> venue.id().equals(venueId))
-                .next();
+                    .bodyToFlux(VenueResponse.class)
+                    .filter(venue -> venue.id().equals(venueId))
+                    .next()
+                .onErrorResume(e -> Mono.error(new WebClientException("Error retrieving venues", e)));
     }
 }

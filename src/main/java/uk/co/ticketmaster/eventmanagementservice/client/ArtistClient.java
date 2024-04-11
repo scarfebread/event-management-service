@@ -13,13 +13,14 @@ public class ArtistClient {
         this.client = client;
     }
 
-    public Mono<ArtistResponse> getById(String artistId) { // TODO exception handling on clients
+    public Mono<ArtistResponse> getById(String artistId) {
         return client
                 .get()
                 .uri("https://iccp-interview-data.s3-eu-west-1.amazonaws.com/78656681/artists.json")
                 .retrieve()
-                .bodyToFlux(ArtistResponse.class)
-                .filter(artist -> artist.id().equals(artistId))
-                .next();
+                    .bodyToFlux(ArtistResponse.class)
+                    .filter(artist -> artist.id().equals(artistId))
+                    .next()
+                .onErrorResume(e -> Mono.error(new WebClientException("Error retrieving artists", e)));
     }
 }
