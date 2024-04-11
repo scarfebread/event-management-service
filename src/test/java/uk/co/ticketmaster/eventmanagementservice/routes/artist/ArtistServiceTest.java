@@ -18,25 +18,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
+import static uk.co.ticketmaster.eventmanagementservice.defaults.ArtistDefaults.*;
+import static uk.co.ticketmaster.eventmanagementservice.defaults.EventDefaults.*;
+import static uk.co.ticketmaster.eventmanagementservice.defaults.VenueDefaults.*;
 
 class ArtistServiceTest {
-    private static final String ARTIST_ID = "100";
-    private static final String ARTIST_NAME = "ARTIST_NAME";
-    private static final String ARTIST_IMG = "ARTIST_IMG";
-    private static final String ARTIST_URL = "ARTIST_URL";
-    private static final Integer ARTIST_RANK = 1;
-
-    private static final String EVENT_TITLE = "EVENT_TITLE";
-    private static final String EVENT_ID = "10";
-    private static final String EVENT_DATE_STATUS = "EVENT_DATE_STATUS";
-    private static final String EVENT_TIMEZONE = "EVENT_TIMEZONE";
-    private static final String EVENT_START_DATE = "EVENT_START_DATE";
-
-    private static final String VENUE_NAME = "VENUE_NAME";
-    private static final String VENUE_URL = "VENUE_URL";
-    private static final String VENUE_CITY = "VENUE_CITY";
-    private static final String VENUE_ID = "20";
-
     @Test
     void givenValidArtistId_whenGetArtist_thenReturnArtistWithEvents() {
         var artistClient = mock(ArtistClient.class);

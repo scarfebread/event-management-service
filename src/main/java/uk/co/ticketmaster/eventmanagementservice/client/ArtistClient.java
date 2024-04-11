@@ -13,7 +13,7 @@ public class ArtistClient {
         this.client = client;
     }
 
-    public Mono<ArtistResponse> getById(String artistId) {
+    public Mono<ArtistResponse> getById(String artistId) { // TODO exception handling on clients
         return client
                 .get()
                 .uri("https://iccp-interview-data.s3-eu-west-1.amazonaws.com/78656681/artists.json")
