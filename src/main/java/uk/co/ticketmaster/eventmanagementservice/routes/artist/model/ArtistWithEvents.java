@@ -1,7 +1,7 @@
 package uk.co.ticketmaster.eventmanagementservice.routes.artist.model;
 
 import uk.co.ticketmaster.eventmanagementservice.client.response.ArtistResponse;
-import uk.co.ticketmaster.eventmanagementservice.routes.event.Event;
+import uk.co.ticketmaster.eventmanagementservice.routes.event.model.Event;
 
 import java.util.List;
 import java.util.Objects;

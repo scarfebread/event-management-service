@@ -1,4 +1,4 @@
-package uk.co.ticketmaster.eventmanagementservice.routes.event;
+package uk.co.ticketmaster.eventmanagementservice.routes.event.model;
 
 import uk.co.ticketmaster.eventmanagementservice.client.response.EventResponse;
 import uk.co.ticketmaster.eventmanagementservice.routes.venue.Venue;
