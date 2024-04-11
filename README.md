@@ -114,6 +114,9 @@ Here we define the upstream clients to each of the services. The client director
 ### Concurrent calls to S3
 Although we could make all 3 calls concurrently since we're pulling all the data back, this wouldn't be the case in the real world, so I've decided to call the artist and event endpoints concurrently, with venues off the back of the event response.
 
+### Data integrity issues
+There is a possibility that the event references IDs that do not exist in the corresponding services. If an artist does not exist in the artist endpoint, a 404 will be returned. However, if a venue does not exist on the venue endpoint, a partial response will be returned and a WARN will be logged.
+
 ## Next steps
 ### Expose interface documentation
 At the moment the interface is defined in the README, whereas for a production application we should expose via OpenAPI documentation.
