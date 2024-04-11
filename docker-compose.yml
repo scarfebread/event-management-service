@@ -4,4 +4,4 @@ services:
   event-management-service:
     build: .
     ports:
-      - "8080:8080"
+      - "8085:8080"
