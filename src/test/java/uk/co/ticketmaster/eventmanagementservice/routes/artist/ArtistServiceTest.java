@@ -67,4 +67,44 @@ class ArtistServiceTest {
                 .assertNext(response -> assertEquals(expectedArtist, response))
                 .verifyComplete();
     }
+
+    @Test
+    void givenValidArtistIdWithNoEvents_whenGetArtist_thenReturnArtistWithoutEvents() {
+        var artistClient = mock(ArtistClient.class);
+        var eventClient = mock(EventClient.class);
+        var venueClient = mock(VenueClient.class);
+
+        var artistResponse = new ArtistResponse(ARTIST_ID, ARTIST_NAME, ARTIST_IMG, ARTIST_URL, ARTIST_RANK);
+
+        var expectedArtist = ArtistWithEvents
+                .fromResponse(artistResponse)
+                .withEvents(List.of());
+
+        when(artistClient.getById(ARTIST_ID)).thenReturn(Mono.just(artistResponse));
+        when(eventClient.getByArtistId(ARTIST_ID)).thenReturn(Flux.empty());
+
+        var artistService = new ArtistService(artistClient, venueClient, eventClient);
+
+        StepVerifier
+                .create(artistService.getArtist(ARTIST_ID))
+                .assertNext(response -> assertEquals(expectedArtist, response))
+                .verifyComplete();
+    }
+
+    @Test
+    void givenAnArtistIdThatDoesNotExist_whenGetArtist_thenReturnEmptyMono() {
+        var artistClient = mock(ArtistClient.class);
+        var eventClient = mock(EventClient.class);
+        var venueClient = mock(VenueClient.class);
+
+        when(artistClient.getById(ARTIST_ID)).thenReturn(Mono.empty());
+        when(eventClient.getByArtistId(ARTIST_ID)).thenReturn(Flux.empty());
+
+        var artistService = new ArtistService(artistClient, venueClient, eventClient);
+
+        StepVerifier
+                .create(artistService.getArtist(ARTIST_ID))
+                .expectNextCount(0)
+                .verifyComplete();
+    }
 }
