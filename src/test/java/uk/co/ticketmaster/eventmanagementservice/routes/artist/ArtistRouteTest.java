@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
+import uk.co.ticketmaster.eventmanagementservice.client.WebClientException;
 import uk.co.ticketmaster.eventmanagementservice.client.response.ArtistResponse;
 import uk.co.ticketmaster.eventmanagementservice.routes.artist.model.Artist;
 
@@ -49,5 +50,22 @@ class ArtistRouteTest {
                 .exchange()
                 .expectStatus()
                 .isNotFound();
+    }
+
+    @Test
+    void givenAServerError_whenGetArtist_thenReturn500() {
+        var service = mock(ArtistService.class);
+
+        when(service.getArtist(ARTIST_ID)).thenThrow(WebClientException.class);
+
+        var artistRoute = new ArtistRoute(service);
+
+        WebTestClient client = WebTestClient.bindToRouterFunction(artistRoute.getArtist()).build();
+
+        client.get().uri("/artist/" + ARTIST_ID)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus()
+                .is5xxServerError();
     }
 }

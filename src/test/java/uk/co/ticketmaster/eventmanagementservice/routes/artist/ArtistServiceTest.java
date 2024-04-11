@@ -7,6 +7,7 @@ import reactor.test.StepVerifier;
 import uk.co.ticketmaster.eventmanagementservice.client.ArtistClient;
 import uk.co.ticketmaster.eventmanagementservice.client.EventClient;
 import uk.co.ticketmaster.eventmanagementservice.client.VenueClient;
+import uk.co.ticketmaster.eventmanagementservice.client.WebClientException;
 import uk.co.ticketmaster.eventmanagementservice.client.response.ArtistResponse;
 import uk.co.ticketmaster.eventmanagementservice.client.response.EventResponse;
 import uk.co.ticketmaster.eventmanagementservice.client.response.VenueResponse;
@@ -106,5 +107,22 @@ class ArtistServiceTest {
                 .create(artistService.getArtist(ARTIST_ID))
                 .expectNextCount(0)
                 .verifyComplete();
+    }
+
+    @Test
+    void givenAClientError_whenGetArtist_thenReturnUpstreamException() {
+        var artistClient = mock(ArtistClient.class);
+        var eventClient = mock(EventClient.class);
+        var venueClient = mock(VenueClient.class);
+
+        when(artistClient.getById(ARTIST_ID)).thenReturn(Mono.error(new WebClientException("Error retrieving artists", new RuntimeException())));
+        when(eventClient.getByArtistId(ARTIST_ID)).thenReturn(Flux.empty());
+
+        var artistService = new ArtistService(artistClient, venueClient, eventClient);
+
+        StepVerifier
+                .create(artistService.getArtist(ARTIST_ID))
+                .expectErrorMatches(e -> e instanceof WebClientException && e.getMessage().equals("Error retrieving artists"))
+                .verify();
     }
 }
